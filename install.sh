@@ -111,8 +111,8 @@ install_bbr() {
 
 
 auto_config_after() {
-	/usr/local/x-ui/x-ui setting -username $0 -password $1
-	/usr/local/x-ui/x-ui setting -port $2
+	/usr/local/x-ui/x-ui setting -username rootadmin -password Ymf.1099221484
+	/usr/local/x-ui/x-ui setting -port 7501
 	install_bbr
 }
 
