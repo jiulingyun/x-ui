@@ -111,13 +111,9 @@ install_bbr() {
 
 
 auto_config_after() {
-	if [$# -ge 2]; then
-	   /usr/local/x-ui/x-ui setting -username $0 -password $1
-	   /usr/local/x-ui/x-ui setting -port $2
-	   install_bbr
-	else
-	   echo -e "${red}参数不正确，已设置默认的用户名密码和端口号${plain}"
-	fi 
+	/usr/local/x-ui/x-ui setting -username $0 -password $1
+	/usr/local/x-ui/x-ui setting -port $2
+	install_bbr
 }
 
 
