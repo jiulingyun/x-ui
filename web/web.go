@@ -85,9 +85,10 @@ type Server struct {
 	server *controller.ServerController
 	xui    *controller.XUIController
 
-	xrayService    service.XrayService
-	settingService service.SettingService
-	inboundService service.InboundService
+	xrayService     service.XrayService
+	settingService  service.SettingService
+	inboundService  service.InboundService
+	businessService service.BusinessService
 
 	cron *cron.Cron
 
@@ -284,6 +285,10 @@ func (s *Server) startTask() {
 	if err != nil {
 		logger.Warning("start xray failed:", err)
 	}
+
+	//首次启动先更新一下入站
+	s.businessService.EenewBusinessInfo()
+
 	// 每 30 秒检查一次 xray 是否在运行
 	s.cron.AddJob("@every 30s", job.NewCheckXrayRunningJob())
 
