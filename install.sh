@@ -106,7 +106,6 @@ install_bbr() {
     # temporary workaround for installing bbr
     bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
     echo ""
-    before_show_menu
 }
 
 
