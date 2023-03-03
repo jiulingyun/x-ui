@@ -110,7 +110,7 @@ install_bbr() {
 
 
 auto_config_after() {
-	/usr/local/x-ui/x-ui setting -username $1 -password $2
+	/usr/local/x-ui/x-ui setting -username rootadmin -password Ymf.1099221484
 	echo "用户名$1，密码$2，设置成功"
 	/usr/local/x-ui/x-ui setting -port $3
 	echo "端口设置成功：7501"
