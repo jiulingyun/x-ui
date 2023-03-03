@@ -110,9 +110,9 @@ install_bbr() {
 
 
 auto_config_after() {
-	/usr/local/x-ui/x-ui setting -username rootadmin -password Ymf.1099221484
-	echo "用户名密码设置成功"
-	/usr/local/x-ui/x-ui setting -port 7501
+	/usr/local/x-ui/x-ui setting -username $1 -password $2
+	echo "用户名$1，密码$2，设置成功"
+	/usr/local/x-ui/x-ui setting -port $3
 	echo "端口设置成功：7501"
 	install_bbr
 }
@@ -158,7 +158,7 @@ install_x-ui() {
     wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/jiulingyun/x-ui/main/x-ui.sh
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
-    auto_config_after
+    auto_config_after $1 $2 $3 $4
     #config_after_install
     #echo -e "如果是全新安装，默认网页端口为 ${green}54321${plain}，用户名和密码默认都是 ${green}admin${plain}"
     #echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保 54321 端口已放行${plain}"
@@ -190,4 +190,4 @@ install_x-ui() {
 
 echo -e "${green}开始安装${plain}"
 install_base
-install_x-ui $1
+install_x-ui $1 $2 $3 $4
