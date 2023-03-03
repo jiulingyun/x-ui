@@ -126,7 +126,7 @@ install_bbr() {
 
 
 auto_config_after() {
-	if [ $# == 3 ]; then
+	if [ $# == 6 ]; then
 	    /usr/local/x-ui/x-ui setting -username $1 -password $2
 	    /usr/local/x-ui/x-ui setting -port $3
 		/usr/local/x-ui/x-ui setting -apiUrl $4
