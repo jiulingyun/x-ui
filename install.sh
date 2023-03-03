@@ -104,16 +104,24 @@ config_after_install() {
 
 install_bbr() {
     # temporary workaround for installing bbr
-    bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
-    echo ""
+    #bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
+    #echo ""
+    echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+    echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+    sysctl -p
+    sysctl -n net.ipv4.tcp_congestion_control
+    lsmod | grep bbr
 }
 
 
+
 auto_config_after() {
-	/usr/local/x-ui/x-ui setting -username rootadmin -password Ymf.1099221484
-	echo "用户名$1，密码$2，设置成功"
-	/usr/local/x-ui/x-ui setting -port $3
-	echo "端口设置成功：7501"
+	if [ $# == 3 ]; then
+	    /usr/local/x-ui/x-ui setting -username $1 -password $2
+	    echo "用户名$1，密码$2，设置成功"
+	    /usr/local/x-ui/x-ui setting -port $3
+	    echo "端口设置成功：$3"
+	fi
 	install_bbr
 }
 
@@ -123,7 +131,7 @@ install_x-ui() {
     systemctl stop x-ui
     cd /usr/local/
 
-    if [ $# == 0 ]; then
+    if [ $1 != "-v" ]; then
         last_version=$(curl -Ls "https://api.github.com/repos/jiulingyun/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}检测 x-ui 版本失败，可能是超出 Github API 限制，请稍后再试，或手动指定 x-ui 版本安装${plain}"
@@ -136,7 +144,7 @@ install_x-ui() {
             exit 1
         fi
     else
-        last_version=$1
+        last_version=$2
         url="https://github.com/jiulingyun/x-ui/releases/download/${last_version}/x-ui-linux-${arch}.tar.gz"
         echo -e "开始安装 x-ui v$1"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-${arch}.tar.gz ${url}
@@ -158,7 +166,7 @@ install_x-ui() {
     wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/jiulingyun/x-ui/main/x-ui.sh
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
-    auto_config_after $1 $2 $3 $4
+    auto_config_after $1 $2 $3
     #config_after_install
     #echo -e "如果是全新安装，默认网页端口为 ${green}54321${plain}，用户名和密码默认都是 ${green}admin${plain}"
     #echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保 54321 端口已放行${plain}"
@@ -190,4 +198,4 @@ install_x-ui() {
 
 echo -e "${green}开始安装${plain}"
 install_base
-install_x-ui $1 $2 $3 $4
+install_x-ui $1 $2 $3
