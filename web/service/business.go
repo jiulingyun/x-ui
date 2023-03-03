@@ -223,7 +223,7 @@ func (j *BusinessService) EenewBusinessInfo() error {
 			j.PullNodeLink(inbound)
 		} else {
 			//这里开始推送在线状态
-			inbound, err := j.inboundService.GetInbound(1)
+			inbound, err := j.inboundService.GetInbound(data.Data.Id)
 			if err != nil {
 				logger.Error("获取入站失败：", err)
 				return err
