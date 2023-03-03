@@ -166,6 +166,16 @@ func (s *InboundService) AddTraffic(traffics []*xray.Traffic) (err error) {
 	return
 }
 
+func (s *InboundService) ResetTraffic() (int64, error) {
+	db := database.GetDB()
+	result := db.Model(model.Inbound{}).
+		Where("enable = ?", true).
+		Update("down", 0).Update("up", 0)
+	err := result.Error
+	count := result.RowsAffected
+	return count, err
+}
+
 func (s *InboundService) DisableInvalidInbounds() (int64, error) {
 	db := database.GetDB()
 	now := time.Now().Unix() * 1000

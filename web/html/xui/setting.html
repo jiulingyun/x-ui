@@ -79,7 +79,15 @@
                                 <setting-list-item type="text" title="电报机器人通知时间" desc="采用Crontab定时格式,重启面板生效"  v-model="allSetting.tgRunTime"></setting-list-item>
                             </a-list>
                         </a-tab-pane>
-                        <a-tab-pane key="5" tab="其他设置">
+                        <a-tab-pane key="5" tab="阿帕云引擎设置">
+                           <a-list item-layout="horizontal" style="background: white">
+                                <setting-list-item type="text" title="流量重置日" desc="流量自动重置日" v-model="allSetting.trafficResetDay"></setting-list-item>
+                                <setting-list-item type="text" title="API_URL" desc="阿帕云的API地址" v-model="allSetting.apiUrl"></setting-list-item>
+                                <setting-list-item type="text" title="API_KEY" desc="对应阿帕云的API_KEY" v-model="allSetting.apiKey"></setting-list-item>
+                                <setting-list-item type="text" title="业务ID" desc="对应阿帕云的业务ID" v-model="allSetting.businessId"></setting-list-item>
+                          </a-list>
+                        </a-tab-pane>
+                        <a-tab-pane key="6" tab="其他设置">
                             <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="text" title="时区" desc="定时任务按照该时区的时间运行，重启面板生效" v-model="allSetting.timeLocation"></setting-list-item>
                             </a-list>

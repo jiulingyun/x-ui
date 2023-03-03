@@ -1,6 +1,6 @@
 # x-ui
 
-支持多协议多用户的 xray 面板
+本版本是基于vaxilu的版本进行了二次开发，目前新增的功能仅仅用于个人项目。
 
 # 功能介绍
 
@@ -17,7 +17,7 @@
 # 安装&升级
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/jiulingyun/x-ui/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/tensHugo/x-ui/master/install.sh)
 ```
 
 ## 手动安装&升级

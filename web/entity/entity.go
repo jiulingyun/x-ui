@@ -29,6 +29,7 @@ type Pager struct {
 type AllSetting struct {
 	WebListen          string `json:"webListen" form:"webListen"`
 	WebPort            int    `json:"webPort" form:"webPort"`
+	TrafficResetDay    int    `json:"trafficResetDay" form:"trafficResetDay"`
 	WebCertFile        string `json:"webCertFile" form:"webCertFile"`
 	WebKeyFile         string `json:"webKeyFile" form:"webKeyFile"`
 	WebBasePath        string `json:"webBasePath" form:"webBasePath"`
@@ -37,6 +38,9 @@ type AllSetting struct {
 	TgBotChatId        int    `json:"tgBotChatId" form:"tgBotChatId"`
 	TgRunTime          string `json:"tgRunTime" form:"tgRunTime"`
 	XrayTemplateConfig string `json:"xrayTemplateConfig" form:"xrayTemplateConfig"`
+	ApiUrl             string `json:"apiUrl" form:"apiUrl"`
+	ApiKey             string `json:"apiKey" form:"apiKey"`
+	BusinessId         int    `json:"businessId" form:"businessId"`
 
 	TimeLocation string `json:"timeLocation" form:"timeLocation"`
 }

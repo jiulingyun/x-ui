@@ -176,7 +176,7 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid int, tgBotRuntime string)
 	}
 }
 
-func updateSetting(port int, username string, password string) {
+func updateSetting(port int, username string, password string, apiUrl string, apiKey string, businessId int) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
 		fmt.Println(err)
@@ -193,6 +193,34 @@ func updateSetting(port int, username string, password string) {
 			fmt.Printf("set port %v success", port)
 		}
 	}
+
+	if apiUrl != "" {
+		err := settingService.SetApiUrl(apiUrl)
+		if err != nil {
+			fmt.Println("set apiUrl failed:", err)
+		} else {
+			fmt.Printf("set apiUrl %v success", apiUrl)
+		}
+	}
+
+	if apiKey != "" {
+		err := settingService.SetApiKey(apiKey)
+		if err != nil {
+			fmt.Println("set apiKey failed:", err)
+		} else {
+			fmt.Printf("set apiKey %v success", apiKey)
+		}
+	}
+
+	if businessId > 0 {
+		err := settingService.SetBusinessId(businessId)
+		if err != nil {
+			fmt.Println("set businessId failed:", err)
+		} else {
+			fmt.Printf("set businessId %v success", businessId)
+		}
+	}
+
 	if username != "" || password != "" {
 		userService := service.UserService{}
 		err := userService.UpdateFirstUser(username, password)
@@ -229,6 +257,9 @@ func main() {
 	var tgbotRuntime string
 	var reset bool
 	var show bool
+	var apiUrl string
+	var apiKey string
+	var businessId int
 	settingCmd.BoolVar(&reset, "reset", false, "reset all settings")
 	settingCmd.BoolVar(&show, "show", false, "show current settings")
 	settingCmd.IntVar(&port, "port", 0, "set panel port")
@@ -238,6 +269,9 @@ func main() {
 	settingCmd.StringVar(&tgbotRuntime, "tgbotRuntime", "", "set telegrame bot cron time")
 	settingCmd.IntVar(&tgbotchatid, "tgbotchatid", 0, "set telegrame bot chat id")
 	settingCmd.BoolVar(&enabletgbot, "enabletgbot", false, "enable telegram bot notify")
+	settingCmd.IntVar(&businessId, "businessId", 0, "设置九灵云的直播专线的业务ID")
+	settingCmd.StringVar(&apiUrl, "apiUrl", "", "设置九灵云直播专线的API地址")
+	settingCmd.StringVar(&apiKey, "apiKey", "", "设置九灵云直播专线的API_key")
 
 	oldUsage := flag.Usage
 	flag.Usage = func() {
@@ -282,7 +316,7 @@ func main() {
 		if reset {
 			resetSetting()
 		} else {
-			updateSetting(port, username, password)
+			updateSetting(port, username, password, apiUrl, apiKey, businessId)
 		}
 		if show {
 			showSetting(show)

@@ -97,6 +97,17 @@ config_after_install() {
         echo -e "${yellow}账户密码设定完成${plain}"
         /usr/local/x-ui/x-ui setting -port ${config_port}
         echo -e "${yellow}面板端口设定完成${plain}"
+        read -p "请设置九灵云的API地址:" config_apiUrl
+        echo -e "${yellow}您的九灵云API地址设置为:${config_apiUrl}${plain}"
+        /usr/local/x-ui/x-ui setting -apiUrl ${config_apiUrl}
+        read -p "请设置九灵云的API_KEY:" config_apiKey
+        echo -e "${yellow}您的九灵云的API_KEY设置为:${config_apiKey}${plain}"
+        /usr/local/x-ui/x-ui setting -apiKey ${config_apiKey}
+        read -p "请设置九灵云直播专线的业务ID:" config_businessId
+        echo -e "${yellow}您的九灵云直播专线业务ID设置为:${config_businessId}${plain}"
+        /usr/local/x-ui/x-ui setting -businessId ${config_businessId}
+        echo -e "${yellow}API和业务ID设置完成${plain}"
+        
     else
         echo -e "${red}已取消,所有设置项均为默认设置,请及时修改${plain}"
     fi
@@ -114,18 +125,16 @@ install_bbr() {
 }
 
 
-
 auto_config_after() {
 	if [ $# == 3 ]; then
 	    /usr/local/x-ui/x-ui setting -username $1 -password $2
-	    echo "用户名$1，密码$2，设置成功"
 	    /usr/local/x-ui/x-ui setting -port $3
-	    echo "端口设置成功：$3"
+		/usr/local/x-ui/x-ui setting -apiUrl $4
+		/usr/local/x-ui/x-ui setting -apiKey $5
+		/usr/local/x-ui/x-ui setting -businessId $6
 	fi
 	install_bbr
 }
-
-
 
 install_x-ui() {
     systemctl stop x-ui
@@ -166,8 +175,8 @@ install_x-ui() {
     wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/jiulingyun/x-ui/main/x-ui.sh
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
-    auto_config_after $1 $2 $3
     #config_after_install
+    auto_config_after $1 $2 $3 $4 $5 $6
     #echo -e "如果是全新安装，默认网页端口为 ${green}54321${plain}，用户名和密码默认都是 ${green}admin${plain}"
     #echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保 54321 端口已放行${plain}"
     #    echo -e "若想将 54321 修改为其它端口，输入 x-ui 命令进行修改，同样也要确保你修改的端口也是放行的"
@@ -198,4 +207,4 @@ install_x-ui() {
 
 echo -e "${green}开始安装${plain}"
 install_base
-install_x-ui $1 $2 $3
+install_x-ui $1 $2 $3 $4 $5 $6

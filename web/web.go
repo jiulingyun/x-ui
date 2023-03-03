@@ -84,6 +84,7 @@ type Server struct {
 	index  *controller.IndexController
 	server *controller.ServerController
 	xui    *controller.XUIController
+	api    *controller.ApiController
 
 	xrayService     service.XrayService
 	settingService  service.SettingService
@@ -207,6 +208,7 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 	s.index = controller.NewIndexController(g)
 	s.server = controller.NewServerController(g)
 	s.xui = controller.NewXUIController(g)
+	s.api = controller.NewApiController(g)
 
 	return engine, nil
 }
@@ -291,6 +293,12 @@ func (s *Server) startTask() {
 
 	// 每 30 秒检查一次 xray 是否在运行
 	s.cron.AddJob("@every 30s", job.NewCheckXrayRunningJob())
+
+	//每4分钟检查一次九灵云平台的套餐信息
+	s.cron.AddJob("@every 240s", job.NewCheckBusinessStatusJob())
+
+	//每天00:01分检查是否到流量重置日
+	s.cron.AddJob("0 1 0 * * ?", job.TrafficResetJob())
 
 	go func() {
 		time.Sleep(time.Second * 5)

@@ -33,6 +33,10 @@ var defaultValueMap = map[string]string{
 	"tgBotToken":         "",
 	"tgBotChatId":        "0",
 	"tgRunTime":          "",
+	"trafficResetDay":    "1",
+	"apiUrl":             "",
+	"businessId":         "0",
+	"apiKey":             "",
 }
 
 type SettingService struct {
@@ -232,6 +236,38 @@ func (s *SettingService) GetPort() (int, error) {
 
 func (s *SettingService) SetPort(port int) error {
 	return s.setInt("webPort", port)
+}
+
+func (s *SettingService) GetApiUrl() (string, error) {
+	return s.getString("apiUrl")
+}
+
+func (s *SettingService) SetApiUrl(apiUrl string) error {
+	return s.setString("apiUrl", apiUrl)
+}
+
+func (s *SettingService) GetApiKey() (string, error) {
+	return s.getString("apiKey")
+}
+
+func (s *SettingService) SetApiKey(apiKey string) error {
+	return s.setString("apiKey", apiKey)
+}
+
+func (s *SettingService) GetBusinessId() (int, error) {
+	return s.getInt("businessId")
+}
+
+func (s *SettingService) SetBusinessId(businessId int) error {
+	return s.setInt("businessId", businessId)
+}
+
+func (s *SettingService) GetTrafficResetDay() (int, error) {
+	return s.getInt("trafficResetDay")
+}
+
+func (s *SettingService) SetTrafficResetDay(trafficResetDay int) error {
+	return s.setInt("trafficResetDay", trafficResetDay)
 }
 
 func (s *SettingService) GetCertFile() (string, error) {

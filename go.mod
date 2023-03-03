@@ -10,10 +10,11 @@ require (
 	github.com/gin-gonic/gin v1.7.1
 	github.com/go-ole/go-ole v1.2.5 // indirect
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
-	github.com/google/uuid v1.1.2
+	github.com/google/uuid v1.3.0
 	github.com/nicksnyder/go-i18n/v2 v2.1.2
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/shirou/gopsutil v3.21.3+incompatible
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
 	github.com/xtls/xray-core v1.4.2
