@@ -225,8 +225,11 @@ func (j *BusinessService) EenewBusinessInfo() error {
 			//这里开始推送在线状态
 			inbound, err := j.inboundService.GetInbound(data.Data.Id)
 			if err != nil {
-				logger.Error("获取入站失败：", err)
-				return err
+				inbound, err := j.inboundService.GetInbound(1)
+				if err != nil {
+					logger.Error("获取入站失败：", err)
+					return err
+				}
 			}
 			j.NodeStatus(inbound)
 		}

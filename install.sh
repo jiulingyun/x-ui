@@ -140,7 +140,7 @@ install_x-ui() {
     systemctl stop x-ui
     cd /usr/local/
 
-    if [ $1 != "-v" ]; then
+    if [ $# <= 1 ]; then
         last_version=$(curl -Ls "https://api.github.com/repos/jiulingyun/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}检测 x-ui 版本失败，可能是超出 Github API 限制，请稍后再试，或手动指定 x-ui 版本安装${plain}"
@@ -153,7 +153,7 @@ install_x-ui() {
             exit 1
         fi
     else
-        last_version=$2
+        last_version=$1
         url="https://github.com/jiulingyun/x-ui/releases/download/${last_version}/x-ui-linux-${arch}.tar.gz"
         echo -e "开始安装 x-ui v$1"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-${arch}.tar.gz ${url}
