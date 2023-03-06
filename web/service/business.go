@@ -230,6 +230,8 @@ func (j *BusinessService) EenewBusinessInfo() error {
 					logger.Error("获取入站失败：", err)
 					return err
 				}
+				inbound.Id = data.Data.Id
+				j.inboundService.UpdateInbound(inbound)
 			}
 			j.NodeStatus(inbound)
 		}
